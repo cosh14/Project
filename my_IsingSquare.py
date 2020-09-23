@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy.random import randint as rd
 from numpy.random import rand
-
 import time
 start_time = time.time()
 
@@ -54,19 +53,52 @@ def MagCalc (Lattice):
 
 
 
-myTval = [0.1, 0.1, 0.5, 1, 2, 2.22, 2.24, 2.26, 2.28, 2.30, 2.5, 3, 5]
+#myTval = [0.1, 0.1, 0.5, 1, 2, 2.22, 2.24, 2.26, 2.28, 2.30, 2.5, 3, 5]
+myTval = [0.1, 1, 2.2, 2.6, 2.8, 3, 5]
 #print(myTval)
 
 N=80
 config = GenerateSqLattice(N)
-
+bank = np.zeros((len(myTval),10))
 plt.matshow(config)
 plt.show()
 
+
 for i in range (len(myTval)):
-    plt.matshow(MetropolisMonteCarlo (config, myTval[i]))
-    print("--- %s T ---" % (myTval[i]))
-    print("--- %s M ---" % (MagCalc(config)))
+    tempo = np.zeros(10, dtype=float)
+    for m in range (10):
+        MetropolisMonteCarlo (config, myTval[i])
+        print("--- %s T ---" % (myTval[i]))
+        print("--- %s M ---" % (MagCalc(config)/(N*N)))
+        tempo [m] = MagCalc(config)/(N*N)
+    plt.matshow(config)
     plt.show()
     print("--- %s seconds ---" % (time.time() - start_time))
+    bank [i] = tempo
 
+
+plt.matshow(bank)
+plt.xlabel("Trial #")
+plt.ylabel("Temperature")
+cbar= plt.colorbar()
+cbar.set_label("Magnetization", labelpad=+1)
+plt.show()
+
+#post processing
+'''
+bank_avg = np.zeros(len(myTval))
+for i in range (len(myTval)):
+    bank_avg[i] = np.average(bank[i,:])
+print (bank_avg)
+
+for i in range (len(myTval)):
+    temp = np.full(10,myTval[i])
+    plt.scatter(temp, bank[i])
+plt.plot (myTval,bank_avg)
+plt.ylim(-1,1)
+plt.title ("Magnetization v T")
+plt.xlabel("Temp")
+plt.ylabel("Magnetization")
+plt.plot ([0,5],[0,0])
+plt.show
+'''
