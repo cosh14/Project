@@ -31,6 +31,19 @@
 
   <style>
 
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #111;
+      padding-top: 150px;
+    }
+
     .bg-img
     {
       background-image: url("1.jpg");
@@ -67,6 +80,42 @@
       }
     }
     
+      .lightsaber   
+      {
+      position: relative;
+      color:chartreuse;
+      }
+
+    .lightsaber label {
+      display: block;
+      position: absolute;
+      width: 60px;
+      height: 100px;
+      background: #DDD;
+      border-bottom: solid 8px gray;
+      border-top: solid 8px gray;
+      border-radius: 5px;
+    }
+
+    .lightsaber input[type="checkbox"] {
+      opacity: 0;
+    }
+
+    .lightsaber .plasma {
+      position: absolute;
+      bottom: 22px;
+      left: 2px;
+      background: green;
+      border-radius: 12px 12px 0 0;
+      transition: height 0.3s;
+      width: 10px;
+      height: 2500px;
+      filter: blur(1px);
+    }
+    
+    .lightsaber input[type=checkbox]:checked~.plasma{}
+
+
   </style>
 
   <!--Copy as it is for evry page. Contains bgcolor and navbar-->
@@ -102,6 +151,12 @@
       </div>
     </nav>
   <!--Till here-->
+  <div class="lightsaber">
+    <label for="yoda"></label>
+    <input id="yoda" type="checkbox" checked>
+    <div class="plasma"></div>
+  </div>
+
 
 
  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
